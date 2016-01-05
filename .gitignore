@@ -1,0 +1,167 @@
+#build
+build_params.sh
+
+#VS
+coastn.sln
+coastn.vcxproj
+coastn.vcxproj.filters
+
+# Directory
+trials/
+build/
+intel64/trials/c120/
+intel64/trials/c140/
+intel64/trials/c220/
+intel64/gmp/
+intel64/vs2013/Debug/
+intel64/vs2013/x64/
+intel64/vs2013/utils/x64/
+intel64/vs2013/libpolyselect_common/x64/
+intel64/vs2013/libpolyselect_common/Debug/
+intel64/trials/tmp/
+gmp-6.0.0/build-gcc/
+gmp-6.0.0/build-Intel/
+gmp-6.0.0/build-Intel-mic/
+
+# Scripts
+scripts/cadofactor/__pycache__/
+scripts/cadofactor/workunit.pyo
+
+# Bins
+#intel64/gf2x/gf2x/stamp-h1
+#intel64/gf2x/gf2x/stamp-h2
+#intel64/gf2x/libtool
+#intel64/gf2x/src/gen_bb_mul_code
+intel64/filter/dup1
+intel64/filter/dup2
+intel64/filter/filter_galois
+intel64/filter/merge
+intel64/filter/merge-dl
+intel64/filter/purge
+intel64/filter/reconstructlog-dl
+intel64/filter/replay
+intel64/filter/replay-dl
+intel64/filter/sm
+intel64/linalg/bwc/acollect
+intel64/linalg/bwc/cleanup
+intel64/linalg/bwc/dispatch
+intel64/linalg/bwc/gather
+intel64/linalg/bwc/krylov
+intel64/linalg/bwc/lingen
+intel64/linalg/bwc/mf_bal
+intel64/linalg/bwc/mf_scan
+intel64/linalg/bwc/mksol
+intel64/linalg/bwc/prep
+intel64/linalg/bwc/random_matrix
+intel64/linalg/bwc/secure
+intel64/linalg/bwc/split
+intel64/linalg/characters
+intel64/misc/check_rels
+intel64/polyselect/dlpolyselect
+intel64/polyselect/polyselect
+intel64/polyselect/polyselect_ropt
+intel64/polyselect/rotate
+intel64/polyselect/rotate_all
+intel64/polyselect/sopt
+intel64/sieve/dupsup
+intel64/sieve/ecm/issmooth
+intel64/sieve/ecm/testbench
+intel64/sieve/freerel
+intel64/sieve/las
+intel64/sieve/makefb
+intel64/sieve/smooth
+intel64/sieve/strategies/benchfm
+intel64/sieve/strategies/finalst
+intel64/sieve/strategies/gen_decomp
+intel64/sieve/strategies/gfm
+intel64/sieve/strategies/gst
+intel64/sieve/strategies/test_strategy_cado
+intel64/sqrt/checkdep
+intel64/sqrt/crtalgsqrt
+intel64/sqrt/sqrt
+intel64/utils/antebuffer
+
+# Visual Studio
+# =========================
+*.user
+*.opensdf
+*.sdf
+*.suo
+/Debug
+/Release
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+# =========================
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
