@@ -42,15 +42,15 @@ tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
 tasks.polyselect.batch=4 \
 tasks.sieve.sieving.las.execpath=$SRC/build/mic \
 tasks.sieve.sieving.threads=4 \
-tasks.sieve.factorbase.makefb.execpath=$SRC/build/xeon \
+tasks.sieve.factorbase.makefb.execpath=$SRC/build/intel64 \
 tasks.sieve.factorbase.threads=12 \
-tasks.sieve.freerel.freerel.execpath=$SRC/build/xeon \
+tasks.sieve.freerel.freerel.execpath=$SRC/build/intel64 \
 tasks.sieve.freerel.threads=12 \
-tasks.filter.execpath=$SRC/build/xeon \
+tasks.filter.execpath=$SRC/build/intel64 \
 tasks.filter.threads=12 \
-tasks.linalg.execpath=$SRC/build/xeon \
+tasks.linalg.execpath=$SRC/build/intel64 \
 tasks.linalg.threads=12 \
-tasks.sqrt.execpath=$SRC/build/xeon \
+tasks.sqrt.execpath=$SRC/build/intel64 \
 tasks.sqrt.threads=12 \
 2>&1 \
 | ts '[%Y%m%d%H%M%S]' \
