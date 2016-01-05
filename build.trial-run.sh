@@ -11,7 +11,7 @@ SRC=/home/cado-nfs
 trials=/mnt/nfs/System/trials
 
 echo "HYBRID BUILD"
-BUILDTREE=$SRC/build/intel64
+BUILDTREE=$SRC/build/mic
 PYTHON3="python3"
 
 echo "Export RSA-120 factorization trial data to timestamped file: $filename"
@@ -52,7 +52,6 @@ tasks.linalg.execpath=$SRC/build/xeon \
 tasks.linalg.threads=12 \
 tasks.sqrt.execpath=$SRC/build/xeon \
 tasks.sqrt.threads=12 \
-tasks.workdir=$tmpdir \
 2>&1 \
 | ts '[%Y%m%d%H%M%S]' \
 | tee $filename
