@@ -53,4 +53,6 @@ tasks.linalg.threads=12 \
 tasks.sqrt.execpath=$SRC/build/xeon \
 tasks.sqrt.threads=12 \
 tasks.workdir=$tmpdir \
-2>&1 | tee $filename
+2>&1 \
+| ts '[%Y%m%d%H%M%S]' \
+| tee $filename
