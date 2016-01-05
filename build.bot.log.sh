@@ -10,4 +10,5 @@ filename=$build_logs/cado-nfs-build_bot-$(timestamp).txt
 
 cd $SRC && sh $SRC/build.bot.sh \
 2>&1 \
+| ts '[%Y%m%d%H%M%S]' \
 | tee -a $filename
