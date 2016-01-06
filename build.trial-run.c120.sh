@@ -23,7 +23,7 @@ mkdir -p $tmpdir
 chmod 755 $tmpdir
 filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
 $PYTHON3 $BUILDTREE/cado-nfs.py \
-N=21290246318258757547497882016271517497806703963277216278233383215381949984056495911366573853021918316783107387995317230889569230873441936471 \
+N=227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479 \
 server.address=192.168.1.80 \
 server.only_registered=False \
 server.port=8012 \
@@ -35,8 +35,8 @@ slaves.nrclients=60 \
 slaves.scriptpath=$SRC/build/mic \
 tasks.polyselect.threads=4 \
 tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
-tasks.polyselect.admax = 17280000
-tasks.polyselect.adrange = 36000
+tasks.polyselect.admax=1728000 \
+tasks.polyselect.adrange=3600 \
 tasks.polyselect.nrkeep=3840 \
 tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
 tasks.polyselect.batch=4 \
