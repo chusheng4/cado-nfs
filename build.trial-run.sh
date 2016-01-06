@@ -14,13 +14,7 @@ echo "HYBRID BUILD"
 BUILDTREE=$SRC/build/mic
 PYTHON3="python3"
 
-echo "Export RSA-120 factorization trial data to timestamped file: $filename"
-digits=c120
-# Clean the tmp directory
-tmpdir=$SRC/trials/$digits
-rm -rf $tmpdir
-mkdir -p $tmpdir
-chmod 755 $tmpdir
+echo "Export factorization trial data to timestamped file: $filename"
 filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
 $PYTHON3 $BUILDTREE/cado-nfs.py \
 N=21290246318258757547497882016271517497806703963277216278233383215381949984056495911366573853021918316783107387995317230889569230873441936471 \
