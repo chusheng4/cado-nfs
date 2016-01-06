@@ -5,7 +5,6 @@ i="0"
 while [ $i -lt 100 ]
 do
  service mpss restart
- scl enable python33 bash
  cd /home/cado-nfs
  #install on mic0-7
  sh ./build.mic_rpms.sh
