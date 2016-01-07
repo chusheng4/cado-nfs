@@ -27,6 +27,7 @@ server.whitelist=192.168.1.0/30 \
 slaves.hostnames=mic0,mic1,mic2,mic3,mic4,mic5,mic6,mic7 \
 slaves.nrclients=60 \
 slaves.scriptpath=$SRC/build/mic \
+tasks.I=12 \
 tasks.polyselect.threads=4 \
 tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
 tasks.polyselect.admax=10000000 \
