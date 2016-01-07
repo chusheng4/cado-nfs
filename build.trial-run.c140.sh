@@ -17,7 +17,7 @@ PYTHON3="python3"
 echo "Export factorization trial data to timestamped file: $filename"
 filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
 $PYTHON3 $BUILDTREE/cado-nfs.py \
-N=10941738641570527421809707322040357612003732945449205990913842131476349984288934784717997257891267332497625752899781833797076537244027146743531593354333897 \
+N=21290246318258757547497882016271517497806703963277216278233383215381949984056495911366573853021918316783107387995317230889569230873441936471 \
 server.address=192.168.1.80 \
 server.only_registered=False \
 server.port=8012 \
@@ -30,7 +30,7 @@ slaves.scriptpath=$SRC/build/mic \
 tasks.I=12 \
 tasks.polyselect.threads=4 \
 tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
-tasks.polyselect.admax=2e7 \
+tasks.polyselect.admax=10000000 \
 tasks.polyselect.adrange=3600 \
 tasks.polyselect.nrkeep=3840 \
 tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
