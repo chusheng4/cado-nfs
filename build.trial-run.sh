@@ -37,6 +37,7 @@ tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
 tasks.polyselect.batch=4 \
 tasks.sieve.sieving.las.execpath=$SRC/build/mic \
 tasks.sieve.sieving.threads=4 \
+tasks.sieve.sieving.gzip=False \
 tasks.sieve.factorbase.makefb.execpath=$SRC/build/intel64 \
 tasks.sieve.factorbase.threads=12 \
 tasks.sieve.freerel.freerel.execpath=$SRC/build/intel64 \
