@@ -1,6 +1,8 @@
 #! /bin/bash
+openssl_rpm=openssl-1.0.2e-r0.k1om.rpm
+
 k1om_rpm=/home/mpss-3.4.6/k1om/
-filetypes="python-core*.rpm \
+install_rpms="python-core*.rpm \
 libpython2.7-1.0*.rpm \
 python-lang*.rpm \
 python-re*.rpm \
@@ -15,7 +17,7 @@ python-compiler*.rpm \
 python-compression*.rpm \
 python-zlib*.rpm \
 python-crypt*.rpm \
-openssl-1.0.0r-r15.1.k1om.rpm \
+$openssl_rpm \
 python-ctypes*.rpm \
 python-curses*.rpm \
 libpanel5-5.9-r8.1.k1om.rpm \
@@ -106,7 +108,7 @@ mics="mic0 mic1 mic2 mic3 mic4 mic5 mic6 mic7"
 for mic in $mics
 do
 echo install python2 on $mic
-ssh root@$mic "cd $k1om_rpm ; rpm -ihv $filetypes"
+ssh root@$mic "cd $k1om_rpm ; rpm -ihv $install_rpms"
 done
 
 for mic in $mics
