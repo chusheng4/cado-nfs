@@ -21,7 +21,7 @@ else
 if test ${MICBUILD+defined}; then
 echo "MIC BUILD"
 BUILDTREE=$SRC/build/mic
-PYTHON3="ssh mic0 /home/Python/release/Python-3.3.3-mic/bin/python3"
+PYTHON3="ssh mic0 /home/Python/release/Python-3.4.4-mic/bin/python3"
 filename=$trials/MIC5110P-$(timestamp).txt
 else
 echo "XEON BUILD"
