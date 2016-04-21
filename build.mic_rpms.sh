@@ -1,7 +1,6 @@
 #! /bin/bash
-openssl_rpm=openssl-1.0.2e-r0.k1om.rpm
 
-k1om_rpm=/home/mpss-3.4.6/k1om/
+k1om_rpm=/home/mpss-3.7/k1om/
 install_rpms="python-core*.rpm \
 libpython2.7-1.0*.rpm \
 python-lang*.rpm \
@@ -17,10 +16,10 @@ python-compiler*.rpm \
 python-compression*.rpm \
 python-zlib*.rpm \
 python-crypt*.rpm \
-$openssl_rpm \
+openssl-1*.rpm \
 python-ctypes*.rpm \
 python-curses*.rpm \
-libpanel5-5.9-r8.1.k1om.rpm \
+libpanel5-*.rpm \
 python-datetime*.rpm \
 python-db*.rpm \
 python-debugger*.rpm \
@@ -41,7 +40,7 @@ python-logging*.rpm \
 python-pickle*.rpm \
 python-fcntl*.rpm \
 python-gdbm*.rpm \
-libgdbm4-1.10-r3.k1om.rpm \
+libgdbm4*.rpm \
 python-hotshot*.rpm \
 python-html*.rpm \
 python-idle*.rpm \
@@ -73,7 +72,7 @@ python-distutils*.rpm \
 libz-dev-*.rpm \
 libsqlite3-*.rpm \
 libsqlite3-dev-*.rpm \
-perl-5.14.2-r7.k1om.rpm \
+perl-5*.rpm \
 libperl5-*.rpm \
 perl-module-posix-sigrt-*.rpm \
 perl-module-corelist-*.rpm \
@@ -97,7 +96,7 @@ perl-module-cwd-*.rpm \
 perl-module-io-seekable-*.rpm \
 perl-module-io-handle-*.rpm \
 perl-module-selectsaver-*.rpm \
-perl-module-io-5.14.2-r7.k1om.rpm \
+perl-module-io-5*.rpm \
 perl-module-errno-*.rpm \
 perl-module-base-*.rpm \
 perl-module-constant-*.rpm \
