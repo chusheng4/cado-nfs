@@ -1,0 +1,990 @@
+From 5fc538a9ea454bd38ad55613639afaab0749960c Mon Sep 17 00:00:00 2001
+From: mancoast <RobertPancoast77@gmail.com>
+Date: Tue, 5 Jan 2016 09:04:48 -0500
+Subject: [PATCH] build scripts mpss-3.7
+
+---
+ .gitignore                  | 167 ++++++++++++++++++++++++++++++++++++++++++++
+ build.bot.log.Loop.10.sh    |  19 +++++
+ build.bot.log.Loop.1000.sh  |  13 ++++
+ build.bot.log.sh            |  14 ++++
+ build.bot.sh                |  72 +++++++++++++++++++
+ build.gmp.sh                |  41 +++++++++++
+ build.id.coast77            |   4 ++
+ build.install.sh            |  22 ++++++
+ build.mic_rpms.sh           | 118 +++++++++++++++++++++++++++++++
+ build.sh                    |  24 +++++++
+ build.trial-run.Loop.100.sh |  17 +++++
+ build.trial-run.c120.dev.sh |  66 +++++++++++++++++
+ build.trial-run.c120.sh     |  57 +++++++++++++++
+ build.trial-run.c140.sh     |  52 ++++++++++++++
+ build.trial-run.sh          |  53 ++++++++++++++
+ build.trial.sh              |  36 ++++++++++
+ build_params.sh             |   3 +
+ build_systems.sh            |   5 ++
+ local.sh                    |  43 ++++++++++++
+ 19 files changed, 826 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 build.bot.log.Loop.10.sh
+ create mode 100644 build.bot.log.Loop.1000.sh
+ create mode 100644 build.bot.log.sh
+ create mode 100644 build.bot.sh
+ create mode 100644 build.gmp.sh
+ create mode 100644 build.id.coast77
+ create mode 100644 build.install.sh
+ create mode 100644 build.mic_rpms.sh
+ create mode 100644 build.sh
+ create mode 100644 build.trial-run.Loop.100.sh
+ create mode 100644 build.trial-run.c120.dev.sh
+ create mode 100644 build.trial-run.c120.sh
+ create mode 100644 build.trial-run.c140.sh
+ create mode 100644 build.trial-run.sh
+ create mode 100644 build.trial.sh
+ create mode 100644 build_params.sh
+ create mode 100644 build_systems.sh
+ create mode 100644 local.sh
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..e939637
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,167 @@
++#build
++build_params.sh
++
++#VS
++coastn.sln
++coastn.vcxproj
++coastn.vcxproj.filters
++
++# Directory
++trials/
++build/
++intel64/trials/c120/
++intel64/trials/c140/
++intel64/trials/c220/
++intel64/gmp/
++intel64/vs2013/Debug/
++intel64/vs2013/x64/
++intel64/vs2013/utils/x64/
++intel64/vs2013/libpolyselect_common/x64/
++intel64/vs2013/libpolyselect_common/Debug/
++intel64/trials/tmp/
++gmp-6.0.0/build-gcc/
++gmp-6.0.0/build-Intel/
++gmp-6.0.0/build-Intel-mic/
++
++# Scripts
++scripts/cadofactor/__pycache__/
++scripts/cadofactor/workunit.pyo
++
++# Bins
++#intel64/gf2x/gf2x/stamp-h1
++#intel64/gf2x/gf2x/stamp-h2
++#intel64/gf2x/libtool
++#intel64/gf2x/src/gen_bb_mul_code
++intel64/filter/dup1
++intel64/filter/dup2
++intel64/filter/filter_galois
++intel64/filter/merge
++intel64/filter/merge-dl
++intel64/filter/purge
++intel64/filter/reconstructlog-dl
++intel64/filter/replay
++intel64/filter/replay-dl
++intel64/filter/sm
++intel64/linalg/bwc/acollect
++intel64/linalg/bwc/cleanup
++intel64/linalg/bwc/dispatch
++intel64/linalg/bwc/gather
++intel64/linalg/bwc/krylov
++intel64/linalg/bwc/lingen
++intel64/linalg/bwc/mf_bal
++intel64/linalg/bwc/mf_scan
++intel64/linalg/bwc/mksol
++intel64/linalg/bwc/prep
++intel64/linalg/bwc/random_matrix
++intel64/linalg/bwc/secure
++intel64/linalg/bwc/split
++intel64/linalg/characters
++intel64/misc/check_rels
++intel64/polyselect/dlpolyselect
++intel64/polyselect/polyselect
++intel64/polyselect/polyselect_ropt
++intel64/polyselect/rotate
++intel64/polyselect/rotate_all
++intel64/polyselect/sopt
++intel64/sieve/dupsup
++intel64/sieve/ecm/issmooth
++intel64/sieve/ecm/testbench
++intel64/sieve/freerel
++intel64/sieve/las
++intel64/sieve/makefb
++intel64/sieve/smooth
++intel64/sieve/strategies/benchfm
++intel64/sieve/strategies/finalst
++intel64/sieve/strategies/gen_decomp
++intel64/sieve/strategies/gfm
++intel64/sieve/strategies/gst
++intel64/sieve/strategies/test_strategy_cado
++intel64/sqrt/checkdep
++intel64/sqrt/crtalgsqrt
++intel64/sqrt/sqrt
++intel64/utils/antebuffer
++
++# Visual Studio
++# =========================
++*.user
++*.opensdf
++*.sdf
++*.suo
++/Debug
++/Release
++
++# Compiled Object files
++*.slo
++*.lo
++*.o
++*.obj
++
++# Precompiled Headers
++*.gch
++*.pch
++
++# Compiled Dynamic libraries
++*.so
++*.dylib
++*.dll
++
++# Fortran module files
++*.mod
++
++# Compiled Static libraries
++*.lai
++*.la
++*.a
++*.lib
++
++# Executables
++*.exe
++*.out
++*.app
++
++# =========================
++# Operating System Files
++# =========================
++
++# OSX
++# =========================
++
++.DS_Store
++.AppleDouble
++.LSOverride
++
++# Thumbnails
++._*
++
++# Files that might appear on external disk
++.Spotlight-V100
++.Trashes
++
++# Directories potentially created on remote AFP share
++.AppleDB
++.AppleDesktop
++Network Trash Folder
++Temporary Items
++.apdisk
++
++# Windows
++# =========================
++
++# Windows image file caches
++Thumbs.db
++ehthumbs.db
++
++# Folder config file
++Desktop.ini
++
++# Recycle Bin used on file shares
++$RECYCLE.BIN/
++
++# Windows Installer files
++*.cab
++*.msi
++*.msm
++*.msp
++
++# Windows shortcuts
++*.lnk
+diff --git a/build.bot.log.Loop.10.sh b/build.bot.log.Loop.10.sh
+new file mode 100644
+index 0000000..1c40c0c
+--- /dev/null
++++ b/build.bot.log.Loop.10.sh
+@@ -0,0 +1,19 @@
++#!/bin/bash
++# iterates 10 times
++i="0"
++
++while [ $i -lt 10 ]
++do
++ cd /home/cado-nfs
++ sh ./build.bot.log.sh
++ i=$[$i+1]
++ sleep 5
++ #ready
++done
++
++service mpss restart
++scl enable python33 bash
++cd /home/cado-nfs
++#install on mic0-7
++sh ./build.mic_rpms.sh
++#ready
+\ No newline at end of file
+diff --git a/build.bot.log.Loop.1000.sh b/build.bot.log.Loop.1000.sh
+new file mode 100644
+index 0000000..1f0ab6f
+--- /dev/null
++++ b/build.bot.log.Loop.1000.sh
+@@ -0,0 +1,13 @@
++#!/bin/bash
++# iterates 100 times
++# executes 1000 builds/factor trials
++i="0"
++
++while [ $i -lt 100 ]
++do
++ cd /home/cado-nfs
++ sh ./build.bot.log.Loop.10.sh
++ i=$[$i+1]
++ sleep 5
++ #ready
++done
+diff --git a/build.bot.log.sh b/build.bot.log.sh
+new file mode 100644
+index 0000000..1471fc6
+--- /dev/null
++++ b/build.bot.log.sh
+@@ -0,0 +1,14 @@
++#!/bin/bash
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++SRC=/home/cado-nfs
++build_logs=/mnt/nfs/System/build_logs
++filename=$build_logs/cado-nfs-build_bot-$(timestamp).txt
++
++cd $SRC && sh $SRC/build.bot.sh \
++2>&1 \
++| ts '[%Y%m%d%H%M%S]' \
++| tee -a $filename
+diff --git a/build.bot.sh b/build.bot.sh
+new file mode 100644
+index 0000000..f4d75e5
+--- /dev/null
++++ b/build.bot.sh
+@@ -0,0 +1,72 @@
++#!/bin/bash
++
++# Build Systems #
++SRC=/home/cado-nfs
++BUILDPARAMS=$SRC/build_params.sh
++source $SRC/build_systems.sh
++
++if test ${MICTOOLS+defined}; then
++# MIC Build #
++rm -rf $BUILDPARAMS
++cat > $BUILDPARAMS <<EOF
++#!/bin/bash
++#GCCBUILD=1
++MICBUILD=1
++EOF
++# GMP requirement
++GMPlibrary=$SRC/build/gmp/mic/lib/libgmp.a
++if [ -f $GMPlibrary ];
++then
++echo "$GMPlibrary found"
++else
++echo "Building $GMPlibrary"
++cd $SRC && sh $SRC/build.gmp.sh
++fi
++cd $SRC && sh $SRC/build.sh
++else
++echo "MICTOOLS disabled"
++fi
++
++if test ${GCCTOOLS+defined}; then
++# GCC Build #
++rm -rf $BUILDPARAMS
++cat > $BUILDPARAMS <<EOF
++#!/bin/bash
++GCCBUILD=1
++#MICBUILD=1
++EOF
++# GMP requirement
++GMPlibrary=$SRC/build/gmp/gcc/lib/libgmp.a
++if [ -f $GMPlibrary ];
++then
++echo "$GMPlibrary found"
++else
++echo "Building $GMPlibrary"
++cd $SRC && sh $SRC/build.gmp.sh
++fi
++cd $SRC && sh $SRC/build.sh
++else
++echo "GCCTOOLS disabled"
++fi
++
++if test ${XEONTOOLS+defined}; then
++# ICC Build #
++rm -rf $BUILDPARAMS
++cat > $BUILDPARAMS <<EOF
++#!/bin/bash
++#GCCBUILD=1
++#MICBUILD=1
++EOF
++# GMP requirement
++GMPlibrary=$SRC/build/gmp/xeon/lib/libgmp.a
++if [ -f $GMPlibrary ];
++then
++echo "$GMPlibrary found"
++else
++echo "Building $GMPlibrary"
++cd $SRC && sh $SRC/build.gmp.sh
++fi
++cd $SRC && sh $SRC/build.sh
++else
++echo "XEONTOOLS disabled"
++fi
+diff --git a/build.gmp.sh b/build.gmp.sh
+new file mode 100644
+index 0000000..07d80ca
+--- /dev/null
++++ b/build.gmp.sh
+@@ -0,0 +1,41 @@
++#!/bin/bash
++
++# Build Parameters #
++SRC=/home/cado-nfs
++source $SRC/build_params.sh
++
++#gmp version
++VGMP=gmp-6.1.0
++
++#get and extract gmp
++mkdir -p $SRC/build
++rm -rf $SRC/build/$VGMP
++rm -f $SRC/build/$VGMP.tar.bz2
++cd $SRC/build && wget https://gmplib.org/download/gmp/$VGMP.tar.bz2
++cd $SRC/build && tar -xf $VGMP.tar.bz2
++
++if test ${GCCBUILD+defined}; then
++echo "GCC BUILD"
++BUILD=$SRC/build/gmp/gcc
++rm -rf $BUILD
++mkdir -p $BUILD
++cd $BUILD && $SRC/build/$VGMP/configure --prefix $BUILD
++cd $BUILD && make -j12 install
++else
++if test ${MICBUILD+defined}; then
++echo "MIC BUILD"
++BUILD=$SRC/build/gmp/mic
++rm -rf $BUILD
++mkdir -p $BUILD
++cd $BUILD && $SRC/build/$VGMP/configure CC=icc CFLAGS="-mmic" --host=x86_64 --disable-assembly --prefix $BUILD
++cd $BUILD && make -j12 install
++else
++echo "XEON BUILD"
++BUILD=$SRC/build/gmp/xeon
++rm -rf $BUILD
++mkdir -p $BUILD
++cd $BUILD && $SRC/build/$VGMP/configure CC=icc CFLAGS="-g -O3" --prefix $BUILD
++cd $BUILD && make -j12 install
++fi
++fi
++echo Finished
+diff --git a/build.id.coast77 b/build.id.coast77
+new file mode 100644
+index 0000000..829abd2
+--- /dev/null
++++ b/build.id.coast77
+@@ -0,0 +1,4 @@
++HOST       Coast77
++OS         CentOS 7
++CPU        Dual E5-2603v3
++k10m       8x 5110P
+diff --git a/build.install.sh b/build.install.sh
+new file mode 100644
+index 0000000..7936ba5
+--- /dev/null
++++ b/build.install.sh
+@@ -0,0 +1,22 @@
++#!/bin/bash
++# Build Parameters #
++source /home/cado-nfs/build_params.sh
++SRC=/home/cado-nfs
++
++if test ${GCCBUILD+defined}; then
++echo "GCC BUILD"
++BUILDTREE=$SRC/build/gcc
++else
++if test ${MICBUILD+defined}; then
++echo "MIC BUILD"
++BUILDTREE=$SRC/build/mic
++else
++echo "XEON BUILD"
++BUILDTREE=$SRC/build/intel64
++fi
++fi
++
++rm -rf $BUILDTREE
++mkdir -p $BUILDTREE
++cd $SRC && make -j12 install
++sh $SRC/build.trial.sh
+diff --git a/build.mic_rpms.sh b/build.mic_rpms.sh
+new file mode 100644
+index 0000000..5151d1f
+--- /dev/null
++++ b/build.mic_rpms.sh
+@@ -0,0 +1,118 @@
++#! /bin/bash
++
++k1om_rpm=/home/mpss-3.7/k1om/
++install_rpms="python-core*.rpm \
++libpython2.7-1.0*.rpm \
++python-lang*.rpm \
++python-re*.rpm \
++python-readline*.rpm \
++python-modules*.rpm \
++python-2to3*.rpm \
++python-audio*.rpm \
++python-bsddb*.rpm \
++python-codecs*.rpm \
++python-compile*.rpm \
++python-compiler*.rpm \
++python-compression*.rpm \
++python-zlib*.rpm \
++python-crypt*.rpm \
++openssl-1*.rpm \
++python-ctypes*.rpm \
++python-curses*.rpm \
++libpanel5-*.rpm \
++python-datetime*.rpm \
++python-db*.rpm \
++python-debugger*.rpm \
++python-io*.rpm \
++python-pprint*.rpm \
++python-math*.rpm \
++python-shell*.rpm \
++python-stringold*.rpm \
++python-difflib*.rpm \
++python-doctest*.rpm \
++python-unittest*.rpm \
++python-elementtree*.rpm \
++python-email*.rpm \
++python-image*.rpm \
++python-mime*.rpm \
++python-netclient*.rpm \
++python-logging*.rpm \
++python-pickle*.rpm \
++python-fcntl*.rpm \
++python-gdbm*.rpm \
++libgdbm4*.rpm \
++python-hotshot*.rpm \
++python-html*.rpm \
++python-idle*.rpm \
++python-tkinter*.rpm \
++python-json*.rpm \
++python-mailbox*.rpm \
++python-mmap*.rpm \
++python-multiprocessing*.rpm \
++python-netserver*.rpm \
++python-numbers*.rpm \
++python-pkgutil*.rpm \
++python-profile*.rpm \
++python-textutils*.rpm \
++python-pydoc*.rpm \
++python-robotparser*.rpm \
++python-smtpd*.rpm \
++python-sqlite3*.rpm \
++libsqlite3*.rpm \
++pkgconfig*.rpm \
++python-threading*.rpm \
++python-subprocess*.rpm \
++python-syslog*.rpm \
++python-terminal*.rpm \
++python-tests*.rpm \
++python-unixadmin*.rpm \
++python-xml*.rpm \
++wget-1*.rpm \
++findutils-4*.rpm \
++python-distutils*.rpm \
++libz-dev-*.rpm \
++libsqlite3-*.rpm \
++libsqlite3-dev-*.rpm \
++perl-5*.rpm \
++libperl5-*.rpm \
++perl-module-posix-sigrt-*.rpm \
++perl-module-corelist-*.rpm \
++perl-module-data-dumper-*.rpm \
++perl-module-fcntl-*.rpm \
++perl-module-file-basename-*.rpm \
++perl-module-file-temp-*.rpm \
++perl-module-list-util-*.rpm \
++perl-module-posix-*.rpm \
++perl-module-posix-sigaction-*.rpm \
++perl-module-xsloader-*.rpm \
++perl-module-exporter-*.rpm \
++perl-module-overload-*.rpm \
++perl-module-symbol-*.rpm \
++perl-module-autoloader-*.rpm \
++perl-module-tie-hash-*.rpm \
++perl-module-carp-*.rpm \
++perl-module-file-spec-*.rpm \
++perl-module-file-path-*.rpm \
++perl-module-cwd-*.rpm \
++perl-module-io-seekable-*.rpm \
++perl-module-io-handle-*.rpm \
++perl-module-selectsaver-*.rpm \
++perl-module-io-5*.rpm \
++perl-module-errno-*.rpm \
++perl-module-base-*.rpm \
++perl-module-constant-*.rpm \
++perl-module-exporter-heavy*.rpm \
++perl-module-bytes*.rpm"
++
++mics="mic0 mic1 mic2 mic3 mic4 mic5 mic6 mic7"
++for mic in $mics
++do
++echo install python2 on $mic
++ssh root@$mic "cd $k1om_rpm ; rpm -ihv $install_rpms"
++done
++
++for mic in $mics
++do
++echo verify python2 on $mic
++ssh root@$mic python --version
++done
+diff --git a/build.sh b/build.sh
+new file mode 100644
+index 0000000..a48e6aa
+--- /dev/null
++++ b/build.sh
+@@ -0,0 +1,24 @@
++#!/bin/bash
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++# Build Parameters #
++SRC=/home/cado-nfs
++source $SRC/build_params.sh
++build_logs=/mnt/nfs/System/build_logs
++
++if test ${GCCBUILD+defined}; then
++echo "GCC BUILD"
++filename=$build_logs/cado-nfs-gcc-$(timestamp).txt
++else
++echo "ICC BUILD"
++filename=$build_logs/cado-nfs-icc-$(timestamp).txt
++fi
++
++sh -x build.install.sh \
++2>&1 \
++| tee -a $filename
++
++echo "done"
+diff --git a/build.trial-run.Loop.100.sh b/build.trial-run.Loop.100.sh
+new file mode 100644
+index 0000000..7b36755
+--- /dev/null
++++ b/build.trial-run.Loop.100.sh
+@@ -0,0 +1,17 @@
++#!/bin/bash
++# iterates 100 times
++i="0"
++
++while [ $i -lt 100 ]
++do
++ service mpss restart
++ cd /home/cado-nfs
++ #install on mic0-7
++ sh ./build.mic_rpms.sh
++ #ready
++ sh ./build.trial-run.sh
++ #done
++ i=$[$i+1]
++ sleep 5
++ #ready
++done
+diff --git a/build.trial-run.c120.dev.sh b/build.trial-run.c120.dev.sh
+new file mode 100644
+index 0000000..7d2e266
+--- /dev/null
++++ b/build.trial-run.c120.dev.sh
+@@ -0,0 +1,66 @@
++#!/bin/bash
++# Export hybrid factorization trials data to timestamped files
++
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++# Build Parameters #
++SRC=/home/cado-nfs
++trials=/mnt/nfs/System/trials
++
++echo "HYBRID BUILD"
++BUILDTREE=$SRC/build/mic
++PYTHON3="python3"
++
++echo "Export RSA-120 factorization trial data to timestamped file: $filename"
++digits=c120
++# Clean the tmp directory
++tmpdir=$SRC/trials/$digits
++rm -rf $tmpdir
++mkdir -p $tmpdir
++chmod 755 $tmpdir
++filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
++$PYTHON3 $BUILDTREE/cado-nfs.py \
++workdir=/home/bigspace/myfacto \
++N=227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479 \
++server.address=192.168.1.80 \
++server.only_registered=False \
++server.port=8012 \
++server.ssl=no \
++server.threaded=True \
++server.whitelist=\
++192.168.1.20,\
++192.168.1.21,\
++192.168.1.22,\
++192.168.1.23,\
++192.168.1.24,\
++192.168.1.25,\
++192.168.1.26,\
++192.168.1.27 \
++slaves.hostnames=mic0,mic1,mic2,mic3,mic4,mic5,mic6,mic7 \
++slaves.nrclients=60 \
++slaves.scriptpath=$SRC/build/mic \
++tasks.polyselect.threads=4 \
++tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
++tasks.polyselect.admax=1728000 \
++tasks.polyselect.adrange=3600 \
++tasks.polyselect.nrkeep=200 \
++tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
++tasks.polyselect.batch=4 \
++tasks.sieve.sieving.las.execpath=$SRC/build/mic \
++tasks.sieve.sieving.threads=4 \
++tasks.sieve.factorbase.makefb.execpath=$SRC/build/intel64 \
++tasks.sieve.factorbase.threads=12 \
++tasks.sieve.freerel.freerel.execpath=$SRC/build/intel64 \
++tasks.sieve.freerel.threads=12 \
++tasks.filter.execpath=$SRC/build/intel64 \
++tasks.filter.threads=12 \
++tasks.linalg.execpath=$SRC/build/mic \
++tasks.linalg.threads=12 \
++tasks.sqrt.execpath=$SRC/build/intel64 \
++tasks.sqrt.threads=12 \
++2>&1 \
++| ts '[%Y%m%d%H%M%S]' \
++| tee $filename
+diff --git a/build.trial-run.c120.sh b/build.trial-run.c120.sh
+new file mode 100644
+index 0000000..33f8363
+--- /dev/null
++++ b/build.trial-run.c120.sh
+@@ -0,0 +1,57 @@
++#!/bin/bash
++# Export hybrid factorization trials data to timestamped files
++
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++# Build Parameters #
++SRC=/home/cado-nfs
++trials=/mnt/nfs/System/trials
++
++echo "HYBRID BUILD"
++BUILDTREE=$SRC/build/mic
++PYTHON3="python3"
++
++echo "Export RSA-120 factorization trial data to timestamped file: $filename"
++digits=c120
++# Clean the tmp directory
++tmpdir=$SRC/trials/$digits
++rm -rf $tmpdir
++mkdir -p $tmpdir
++chmod 755 $tmpdir
++filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
++$PYTHON3 $BUILDTREE/cado-nfs.py \
++N=227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479 \
++server.address=192.168.1.80 \
++server.only_registered=False \
++server.port=8012 \
++server.ssl=no \
++server.threaded=True \
++server.whitelist=192.168.1.0/30 \
++slaves.hostnames=mic0,mic1,mic2,mic3,mic4,mic5,mic6,mic7 \
++slaves.nrclients=60 \
++slaves.scriptpath=$SRC/build/mic \
++tasks.polyselect.threads=4 \
++tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
++tasks.polyselect.admax=1728000 \
++tasks.polyselect.adrange=3600 \
++tasks.polyselect.nrkeep=3840 \
++tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
++tasks.polyselect.batch=4 \
++tasks.sieve.sieving.las.execpath=$SRC/build/mic \
++tasks.sieve.sieving.threads=4 \
++tasks.sieve.factorbase.makefb.execpath=$SRC/build/intel64 \
++tasks.sieve.factorbase.threads=12 \
++tasks.sieve.freerel.freerel.execpath=$SRC/build/intel64 \
++tasks.sieve.freerel.threads=12 \
++tasks.filter.execpath=$SRC/build/intel64 \
++tasks.filter.threads=12 \
++tasks.linalg.execpath=$SRC/build/intel64 \
++tasks.linalg.threads=12 \
++tasks.sqrt.execpath=$SRC/build/intel64 \
++tasks.sqrt.threads=12 \
++2>&1 \
++| ts '[%Y%m%d%H%M%S]' \
++| tee $filename
+diff --git a/build.trial-run.c140.sh b/build.trial-run.c140.sh
+new file mode 100644
+index 0000000..f1c0694
+--- /dev/null
++++ b/build.trial-run.c140.sh
+@@ -0,0 +1,52 @@
++#!/bin/bash
++# Export hybrid factorization trials data to timestamped files
++
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++# Build Parameters #
++SRC=/home/cado-nfs
++trials=/mnt/nfs/System/trials
++
++echo "HYBRID BUILD"
++BUILDTREE=$SRC/build/mic
++PYTHON3="python3"
++
++echo "Export factorization trial data to timestamped file: $filename"
++filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
++$PYTHON3 $BUILDTREE/cado-nfs.py \
++N=21290246318258757547497882016271517497806703963277216278233383215381949984056495911366573853021918316783107387995317230889569230873441936471 \
++server.address=192.168.1.80 \
++server.only_registered=False \
++server.port=8012 \
++server.ssl=no \
++server.threaded=True \
++server.whitelist=192.168.1.0/30 \
++slaves.hostnames=mic0,mic1,mic2,mic3,mic4,mic5,mic6,mic7 \
++slaves.nrclients=60 \
++slaves.scriptpath=$SRC/build/mic \
++tasks.I=12 \
++tasks.polyselect.threads=4 \
++tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
++tasks.polyselect.admax=10000000 \
++tasks.polyselect.adrange=3600 \
++tasks.polyselect.nrkeep=3840 \
++tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
++tasks.polyselect.batch=4 \
++tasks.sieve.sieving.las.execpath=$SRC/build/mic \
++tasks.sieve.sieving.threads=4 \
++tasks.sieve.factorbase.makefb.execpath=$SRC/build/intel64 \
++tasks.sieve.factorbase.threads=12 \
++tasks.sieve.freerel.freerel.execpath=$SRC/build/intel64 \
++tasks.sieve.freerel.threads=12 \
++tasks.filter.execpath=$SRC/build/intel64 \
++tasks.filter.threads=12 \
++tasks.linalg.execpath=$SRC/build/intel64 \
++tasks.linalg.threads=12 \
++tasks.sqrt.execpath=$SRC/build/intel64 \
++tasks.sqrt.threads=12 \
++2>&1 \
++| ts '[%Y%m%d%H%M%S]' \
++| tee $filename
+diff --git a/build.trial-run.sh b/build.trial-run.sh
+new file mode 100644
+index 0000000..9f8b79d
+--- /dev/null
++++ b/build.trial-run.sh
+@@ -0,0 +1,53 @@
++#!/bin/bash
++# Export hybrid factorization trials data to timestamped files
++
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++# Build Parameters #
++SRC=/home/cado-nfs
++trials=/mnt/nfs/System/trials
++
++echo "HYBRID BUILD"
++BUILDTREE=$SRC/build/mic
++PYTHON3="python3"
++
++echo "Export factorization trial data to timestamped file: $filename"
++filename=$trials/E5-2603v3-MIC5110P-$(timestamp).txt
++$PYTHON3 $BUILDTREE/cado-nfs.py \
++N=10941738641570527421809707322040357612003732945449205990913842131476349984288934784717997257891267332497625752899781833797076537244027146743531593354333897 \
++server.address=192.168.1.80 \
++server.only_registered=False \
++server.port=8012 \
++server.ssl=no \
++server.threaded=True \
++server.whitelist=192.168.1.0/30 \
++slaves.hostnames=mic0,mic1,mic2,mic3,mic4,mic5,mic6,mic7 \
++slaves.nrclients=60 \
++slaves.scriptpath=$SRC/build/mic \
++tasks.I=12 \
++tasks.polyselect.threads=4 \
++tasks.polyselect.polyselect1.polyselect.execpath=$SRC/build/mic \
++tasks.polyselect.admax=2e7 \
++tasks.polyselect.adrange=3600 \
++tasks.polyselect.nrkeep=3840 \
++tasks.polyselect.polyselect2.polyselect_ropt.execpath=$SRC/build/mic \
++tasks.polyselect.batch=4 \
++tasks.sieve.sieving.las.execpath=$SRC/build/mic \
++tasks.sieve.sieving.threads=4 \
++tasks.sieve.sieving.gzip=False \
++tasks.sieve.factorbase.makefb.execpath=$SRC/build/intel64 \
++tasks.sieve.factorbase.threads=12 \
++tasks.sieve.freerel.freerel.execpath=$SRC/build/intel64 \
++tasks.sieve.freerel.threads=12 \
++tasks.filter.execpath=$SRC/build/intel64 \
++tasks.filter.threads=12 \
++tasks.linalg.execpath=$SRC/build/intel64 \
++tasks.linalg.threads=12 \
++tasks.sqrt.execpath=$SRC/build/intel64 \
++tasks.sqrt.threads=12 \
++2>&1 \
++| ts '[%Y%m%d%H%M%S]' \
++| tee $filename
+diff --git a/build.trial.sh b/build.trial.sh
+new file mode 100644
+index 0000000..9e78e15
+--- /dev/null
++++ b/build.trial.sh
+@@ -0,0 +1,36 @@
++#!/bin/bash
++# Export factor trials data to timestamped file
++#   Support multiple builds
++
++# Define a timestamp function
++timestamp() {
++	date +"%Y%m%d%H%M%S"
++}
++
++# Build Parameters #
++SRC=/home/cado-nfs
++source $SRC/build_params.sh
++trials=/mnt/nfs/System/trials
++
++if test ${GCCBUILD+defined}; then
++echo "GCC BUILD"
++BUILDTREE=$SRC/build/gcc
++PYTHON3=python3
++filename=$trials/E5-2603v3-GCC-$(timestamp).txt
++else
++if test ${MICBUILD+defined}; then
++echo "MIC BUILD"
++BUILDTREE=$SRC/build/mic
++PYTHON3="ssh mic0 /home/Python/release/Python-3.4.4-mic/bin/python3"
++filename=$trials/MIC5110P-$(timestamp).txt
++else
++echo "XEON BUILD"
++BUILDTREE=$SRC/build/intel64
++PYTHON3=python3
++filename=$trials/E5-2603v3-ICC-$(timestamp).txt
++fi
++fi
++
++echo "Export simple factor trials data to timestamped file: $filename"
++# Simple Test Routine #
++$PYTHON3 $BUILDTREE/cado-nfs.py N=90377629292003121684002147101760858109247336549001090677693 slaves.nrclients=6 tasks.threads=2 2>&1 | tee $filename
+diff --git a/build_params.sh b/build_params.sh
+new file mode 100644
+index 0000000..587105b
+--- /dev/null
++++ b/build_params.sh
+@@ -0,0 +1,3 @@
++#!/bin/bash
++#GCCBUILD=1
++MICBUILD=1
+diff --git a/build_systems.sh b/build_systems.sh
+new file mode 100644
+index 0000000..dce6033
+--- /dev/null
++++ b/build_systems.sh
+@@ -0,0 +1,5 @@
++#!/bin/bash
++
++MICTOOLS=1
++#GCCTOOLS=1
++XEONTOOLS=1
+diff --git a/local.sh b/local.sh
+new file mode 100644
+index 0000000..e96304e
+--- /dev/null
++++ b/local.sh
+@@ -0,0 +1,43 @@
++# Build Parameters #
++source /home/cado-nfs/build_params.sh
++
++if test ${GCCBUILD+defined}; then
++echo "GCC BUILD"
++build_tree="${up_path}/build/gcc"
++PREFIX="${up_path}/build/gcc/"
++GMP_INCDIR="${up_path}/build/gmp/gcc/include"
++GMP_LIBDIR="${up_path}/build/gmp/gcc/lib"
++else
++#common to MIC and XEON
++CC=icc
++CXX=icpc
++NO_PYTHON_CHECK="Python3_Requirement_Ignored"
++if test ${MICBUILD+defined}; then
++echo "MIC BUILD"
++CFLAGS="-std=c99 -mmic -g -O3"
++CXXFLAGS="-mmic -g -O3"
++build_tree="${up_path}/build/mic"
++PREFIX="${up_path}/build/mic/"
++GMP_INCDIR="${up_path}/build/gmp/mic/include"
++GMP_LIBDIR="${up_path}/build/gmp/mic/lib"
++#MPI=/opt/intel/compilers_and_libraries_2016.3.210/linux/mpi/intel64/bin/
++#OMPI_CC=mpiicc
++#OMPI_CXX=mpiicpc
++NO_SSE="DISABLE_INTRINSIC"
++NO_INLINE_ASSEMBLY="DISABLE_INTRINSIC"
++NO_GAS_ASSEMBLY="DISABLE_INTRINSIC"
++GF2X_CONFIGURE_EXTRA_FLAGS="--host=x86_64"
++else
++echo "XEON BUILD"
++build_tree="${up_path}/build/intel64"
++CFLAGS="-std=c99 -g -O3"
++CXXFLAGS="-g -O3"
++build_tree="${up_path}/build/intel64"
++PREFIX="${up_path}/build/intel64/"
++GMP_INCDIR="${up_path}/build/gmp/xeon/include"
++GMP_LIBDIR="${up_path}/build/gmp/xeon/lib"
++#MPI=/opt/intel/compilers_and_libraries_2016.3.210/linux/mpi/intel64/bin/
++#OMPI_CC=mpiicc
++#OMPI_CXX=mpiicpc
++fi
++fi
+-- 
+2.8.1.windows.1
+
