@@ -96,7 +96,7 @@ if os.name == "nt":
             f.seek(0)
             msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
             f.seek(pos)
-elif os.name == "posix":
+elif os.name == "posix_disabled":
     import fcntl
     class FileLock(object):
         @staticmethod

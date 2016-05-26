@@ -37,8 +37,8 @@ else()
                 NO_SYSTEM_ENVIRONMENT_PATH
                 NO_CMAKE_SYSTEM_PATH)
             # These are the standard names.
-            list(APPEND mpicc_names "mpicc")
-            list(APPEND mpicxx_names "mpic++" "mpicxx" "mpiCC")
+            list(APPEND mpicc_names "mpiicc")
+            list(APPEND mpicxx_names "mpiicpc")
             list(APPEND mpiexec_names "mpiexec")
         else()
             # otherwise we make the .<variant> binary names higher

@@ -710,7 +710,7 @@ sub detect_mpi {
                 }
             }
         }
-
+$mpi_ver=3;
         if (defined($mpi_ver)) {
             print STDERR "Using $mpi_ver, MPI_BINDIR=$mpi\n";
         } else {
@@ -847,7 +847,7 @@ if ($mpi_needed) {
     # print STDERR "$_=$ENV{$_}\n" for keys %ENV;
     detect_mpi;
 
-    push @mpi_precmd, "$mpi/mpiexec";
+    push @mpi_precmd, "$mpi/mpirun";
 
     # Need hosts.
     if (exists($ENV{'OAR_JOBID'}) && !defined($hostfile) && !scalar @hosts) {
@@ -884,6 +884,7 @@ if ($mpi_needed) {
 #        } else {
 #            push @mpi_precmd, "-file", $hostfile;
         } else {
+			push @mpi_precmd, "-iface", "mic0";
             push @mpi_precmd, "-machinefile", $hostfile;
         }
 
@@ -961,7 +962,7 @@ if ($mpi_needed) {
     # mkdir must not be marked fatal, because if the command terminates
     # without having ever tried to join in an mpi collective like
     # mpi_init(), there's potential for the mpirun command to complain.
-    dosystem('-nofatal', @mpi_precmd, split(' ', "mkdir -p $wdir"));
+    #dosystem('-nofatal', @mpi_precmd, split(' ', "mkdir -p $wdir"));
 }
 
 if ($main eq ':mpirun') {
